@@ -1,3 +1,6 @@
+<?php 
+require('sessioninfo.php');
+?>
 <html>
 	<head>
 		<!-- Metadata  -->
@@ -13,25 +16,38 @@
 	<body>
 		<h4 class="text-center">Sign Up</h4>
 		<div class="container col-md-3">
-			<form action="dashboard.php" method="POST">
+			
+			<!-- Display error messages, if any  -->
+			<?php require('displaymessages.php'); ?>
+			
+			<form action="process/registration-process.php" method="POST">
 				<div class="form-group">
 					<label for="userName">User name</label>
-					<input type="text" name="userName" class="form-control" id="userName" />
-				</div>
-				<div class="form-group">
-					<label for="firstName">First name</label>
-					<input type="text" name="firstName" class="form-control" id="firstName" />
-				</div>
-				<div class="form-group">
-					<label for="lastName">Last name</label>
-					<input type="text" name="lastName" class="form-control" id="lastName" />
+					<input type="text" name="userName" class="form-control" id="userName" autocomplete="off" />
 				</div>
 				<div class="form-group">
 					<label for="email">Email address</label>
-					<input type="email" name="email" class="form-control" id="email" />
+					<input type="email" name="email" class="form-control" id="email" autocomplete="off" />
 				</div>
-				<button type="submit" class="btn btn-primary">Save</button>
+				<div class="form-group">
+					<label for="firstName">First name</label>
+					<input type="text" name="firstName" class="form-control" id="firstName" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<label for="lastName">Last name</label>
+					<input type="text" name="lastName" class="form-control" id="lastName" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" name="password" class="form-control" id="password" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Confirm password</label>
+					<input type="password" name="confirmPassword" class="form-control" id="confirmPassword" autocomplete="off" />
+				</div>
+				<button type="submit" class="btn btn-primary">Register</button>
 			</form>
+			<a href="login.php">Cancel</a>
 		</div>
 	</body>
 </html>
