@@ -224,7 +224,7 @@ if(array_key_exists('entityResults', json_decode($result, TRUE)['batch']) and js
 	die();
 }
 
-// Register user
+// Update profile
 // Query to send in HTTPS request
 $payload = '{
 	"mode": "NON_TRANSACTIONAL",

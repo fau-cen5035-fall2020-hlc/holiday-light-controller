@@ -91,6 +91,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 				</tbody>
 			</table>
 			<a href="update-profile.php">Update profile</a><br />
+			<a href="change-password.php">Change password</a><br />
 			<a href="login.php">Log out</a>
 		</div>
 	</body>
