@@ -1,5 +1,6 @@
-<?php
+<?php 
 require('sessioninfo.php');
+
 // Query to send in HTTPS request			
 $payload = '{
 	"keys": [
@@ -62,36 +63,32 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 		
 	</head>
 	<body>
-		<h4 class="text-center">Dashboard</h4>
+		<h4 class="text-center">Update Profile</h4>
 		<div class="container col-md-3">
 			
 			<!-- Display error messages, if any  -->
 			<?php require('displaymessages.php'); ?>
 			
-			<h5>User information</h5>
-			
-			<table class="table table-bordered">
-				<tbody>
-					<tr>
-					<th scope="row">First name</th>
-					<td><?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['fname']['stringValue']); ?></td>
-					</tr>
-					<tr>
-					<th scope="row">Last name</th>
-					<td><?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['lname']['stringValue']); ?></td>
-					</tr>
-					<tr>
-					<th scope="row">User name</th>
-					<td><?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['username']['stringValue']); ?></td>
-					</tr>
-					<tr>
-					<th scope="row">Email address</th>
-					<td><?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['email']['stringValue']); ?></td>
-					</tr>
-				</tbody>
-			</table>
-			<a href="update-profile.php">Update profile</a><br />
-			<a href="login.php">Log out</a>
+			<form action="process/update-profile-process.php" method="POST">
+				<div class="form-group">
+					<label for="userName">User name</label>
+					<input type="text" name="userName" class="form-control" id="userName" value="<?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['username']['stringValue']); ?>" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<label for="email">Email address</label>
+					<input type="email" name="email" class="form-control" id="email" value="<?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['email']['stringValue']); ?>" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<label for="firstName">First name</label>
+					<input type="text" name="firstName" class="form-control" id="firstName" value="<?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['fname']['stringValue']); ?>" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<label for="lastName">Last name</label>
+					<input type="text" name="lastName" class="form-control" id="lastName" value="<?php print_r(json_decode($result, TRUE)['found'][0]['entity']['properties']['lname']['stringValue']); ?>" autocomplete="off" />
+				</div>
+				<button type="submit" class="btn btn-primary">Save Changes</button>
+			</form>
+			<a href="dashboard.php">Cancel</a>
 		</div>
 	</body>
 </html>

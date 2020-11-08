@@ -88,7 +88,7 @@ if(!array_key_exists('entityResults', json_decode($result, TRUE)['batch'])){
 // Verify password and log in
 if(password_verify($_POST['password'], json_decode($result, TRUE)['batch']['entityResults'][0]['entity']['properties']['password_hash']['stringValue'])){
 	$_SESSION['userID'] = json_decode($result, TRUE)['batch']['entityResults'][0]['entity']['key']['path'][0]['id'];
-	$message = array('success', 'Successfuly logged in!');
+	$message = array('success', 'Successfully logged in!');
 	array_push($_SESSION['messages'], $message);
 	header('Location:' . '../dashboard.php');
 	die();
