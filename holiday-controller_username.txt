@@ -1,0 +1,10 @@
+projects/holiday-light-controller/topics/raspberry_pi
+
+
+[
+  {
+    "success": {
+      "username": "97XWWZZHrOTuvaMf-XyiqAYz0Ty96oDJTseanmB7"
+    }
+  }
+]
