@@ -21,7 +21,7 @@ if(!isset($_SESSION['accessToken']) or !isset($_SESSION['tokenExpiration']) or $
 	$jwtHeader = '{"alg":"RS256","typ":"JWT"}';
 	
 	// JSON web token (JWT) claim set
-	$jwtClaimSet = '{"iss":"holiday-light-controller@appspot.gserviceaccount.com","scope":"https://www.googleapis.com/auth/datastore","aud":"https://oauth2.googleapis.com/token","exp":' . (time() + 3600) . ',"iat":' . time() . '}';
+	$jwtClaimSet = '{"iss":"holiday-light-controller@appspot.gserviceaccount.com","scope":"https://www.googleapis.com/auth/datastore https://www.googleapis.com/auth/pubsub","aud":"https://oauth2.googleapis.com/token","exp":' . (time() + 3600) . ',"iat":' . time() . '}';
 	
 	// JSON web token (JWT) signature
 	openssl_sign(
@@ -53,7 +53,7 @@ if(!isset($_SESSION['accessToken']) or !isset($_SESSION['tokenExpiration']) or $
 
 	// Close cURL
 	curl_close($ch);
-	
+
 	// If successful, store access token and expiration in session variable
 	if($response === 200){
 		$_SESSION['accessToken'] = json_decode($result, TRUE)['access_token'];
