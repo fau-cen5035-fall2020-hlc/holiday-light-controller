@@ -1,0 +1,217 @@
+<!-- Bootstrap core JavaScript -->
+<script src="styles/vendor/jquery/jquery.min.js"></script>
+<script src="styles/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="styles/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="styles/vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="styles/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="styles/js/creative.min.js"></script>
+
+<!--Calendar section -->
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+<script src="./Pretty-Event-Calendar/src/calendar.js"></script>
+<script>
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+
+    // inline
+    $('#calendar-container').calendar({
+
+        width: 320,
+        height: 320,
+
+        monthArray: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        weekArray: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
+        onSelected: function (view, date, data) {
+            console.log('view:' + view)
+            console.log('date:' + date)
+            var da = date.getDate();
+            var mo = date.getMonth()+1;
+            var ye = date.getFullYear();
+            document.getElementById("selected-date").value = mo + '/' + da + '/' + ye;
+            //console.log('data:' + (data || '无'));
+        },
+
+    });
+  </script>
+
+  <!-- uncheck time toggle -->
+  <script>
+    function toggle(item){
+      if(item.hasAttribute("checked")){      //AM
+        item.removeAttribute("checked");
+        console.log("uncheck");
+      }
+      else{                                  //PM
+        var att = document.createAttribute("checked");
+        item.setAttributeNode(att);
+        console.log("check");
+      }
+    }
+  </script>
+
+  <!-- Dynamically change song input field placehoder-->
+  <script>
+  /*Change placeholder when taggle random*/
+    function random_song(item){
+      var song_input = document.getElementsByClassName("song-input")[0];
+      var placeholder = "";
+      if(item.hasAttribute("checked")){
+        placeholder = "Theme for music";
+        item.removeAttribute("checked");
+      }
+      else{
+        placeholder = "A YouTube playlist URL"
+        var att = document.createAttribute("checked");
+        item.setAttributeNode(att);
+      }
+      song_input.setAttribute("placeholder", placeholder)
+    }
+  </script>
+
+ <!-- Select color to color input-->
+  <script>
+
+    function add_color(){
+      var color_holders = document.getElementsByClassName('set_color');
+      var display = document.getElementById('color-display');
+      for (let [i, c] of Object.entries(color_holders)){
+        if (!c.value){
+          var key = "color"+ toString(i);
+          c.style.backgroundColor = display.style.backgroundColor;
+          c.value = Math.round(display.value);
+          break;
+        }
+      }
+    }
+
+    function clear_all_color(){
+      var color_holders = document.getElementsByClassName('set_color');
+      for (c of color_holders){
+        c.style.backgroundColor = '#FFFFFF';
+        c.value = "";
+      }
+    }
+  </script>
+
+  <!-- schedlue event form validation -->
+  <script>
+    var errorMsg = "";
+    var today = new Date();
+
+    function onSameDay(d1, d2){
+      return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
+    }
+
+    function to_unix_time(form, dateString, h, m){
+      form["datetime"].value = Date.parse(dateString+' '+h.toString() +':'+m.toString()).toString().slice(0, -3);
+    }
+
+    function validDate(form){
+      var dateString = form["selected-date"].value;
+      var selectedDate = new Date(dateString);
+      if(!dateString){
+        errorMsg = "No date was selected";
+        return false;
+      }
+      else if(selectedDate == "Invalid Date"){
+        errorMsg = "Please select a date from the calendar"
+        return false;
+      }
+      else if(selectedDate < today && !onSameDay(selectedDate, today)){
+        errorMsg = " Date can't be in the past"
+        return false;
+      }
+      //form["selected-date"].value = Date.parse(form["selected-date"].value)
+      return true;
+    }
+
+    function validTime(form){
+      var dateString = form["selected-date"].value;
+      var selectedDate = new Date(dateString);
+      var time = form["selected-time"].value.split(":");
+      var h = parseInt(time[0]);
+      var m =  parseInt(time[1]);
+      if(!form["selected-time"].value){
+        errorMsg = "Time can't be empty";
+        return false;
+      }
+      //convert am pm to 24h
+      if (form["ampm"].hasAttribute("checked")){
+        h += 12;
+        form["selected-time"].value = h.toString() +':'+m.toString();
+      }
+      var millisec = h*60*60000 + m*60000;
+      if(selectedDate.getTime() + millisec < Date.now()){
+        errorMsg = "Time can't be in the past";
+        return false;
+      }
+
+      to_unix_time(form, dateString, h, m)
+      return true;
+    }
+
+    function validEventName(form){
+      if(!form["event-name"].value){
+        errorMsg = "Please name this event";
+        return false;
+      }
+      return true;
+    }
+
+    function validSong(form){
+      if(!form["song-input"].value){
+        errorMsg = "Please enter a YouTube playlist URL or a theme";
+        return false;
+      }
+      return true;
+    }
+
+    function validColor(form){
+      var color_holders = document.getElementsByClassName('set_color');
+      if (!color_holders[0].value){ //user need to set at least one color
+        errorMsg = "Please pick at least one color";
+        return false;
+      }
+      return true;
+    }
+
+    function validateForm(){
+      var form = document.forms["scheduleEventForm"];
+      var valid = validDate(form) && validTime(form) && validEventName(form) && validSong(form) && validColor(form);
+
+      if(valid){
+        document.getElementById('selected-date-error').innerHTML= " ";
+        return true;
+      }
+      else{
+        if(!validDate(form)){
+          document.getElementById('selected-date-error').innerHTML= errorMsg;
+        }
+        if(!validTime(form)){
+          document.getElementById('selected-time-error').innerHTML= errorMsg;
+        }
+        if(!validEventName(form)){
+          document.getElementById('selected-event-error').innerHTML= errorMsg;
+        }
+        if(!validSong(form)){
+          document.getElementById('selected-song-error').innerHTML= errorMsg;
+        }
+        if(!validColor(form)){
+          document.getElementById('selected-color-error').innerHTML= errorMsg;
+        }
+        return false;
+      }
+
+    }
+  </script>
