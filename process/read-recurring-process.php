@@ -53,15 +53,17 @@ $response = curl_getinfo($ch);
 // Close cURL
 curl_close($ch);
 
+print_r($result);
+
 foreach(json_decode($result, TRUE)['batch']['entityResults'] as $key => $value){
 	$id = $value['entity']['key']['path'][0]['id'];
 	$userID = $value['entity']['properties']['userID']['stringValue'];
 	$datetime = $value['entity']['properties']['datetime']['stringValue'];
 	$event = $value['entity']['properties']['event']['stringValue'];
 	$song = $value['entity']['properties']['song']['stringValue'];
-	$hue1 = $value['entity']['properties']['hue']['stringValue'];
-	$hue2 = $value['entity']['properties']['hue2']['stringValue'];
-	$hue3 = $value['entity']['properties']['hue3']['stringValue'];
+	$hue1 = $value['entity']['properties']['hue']['doubleValue'];
+	$hue2 = $value['entity']['properties']['hue2']['doubleValue'];
+	$hue3 = $value['entity']['properties']['hue3']['doubleValue'];
 
 	if(array_key_exists('recurrence', $value['entity']['properties'])){
 		$recurrence = $value['entity']['properties']['recurrence']['integerValue'];
@@ -188,13 +190,13 @@ foreach(json_decode($result, TRUE)['batch']['entityResults'] as $key => $value){
 								"stringValue": "' . $song . '"
 							},
 							"hue": {
-								"stringValue": "' . $hue1 . '"
+								"doubleValue": "' . $hue1 . '"
 							},
 							"hue2": {
-								"stringValue": "' . $hue2 . '"
+								"doubleValue": "' . $hue2 . '"
 							},
 							"hue3": {
-								"stringValue": "' . $hue3 . '"
+								"doubleValue": "' . $hue3 . '"
 							}
 						}
 					}
