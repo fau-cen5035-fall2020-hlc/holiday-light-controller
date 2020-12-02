@@ -1,0 +1,73 @@
+<section class="bg-primary" id="services" style="height:550px;background-color:#F05F40 !important;">
+  <div class="container" >
+    <div class="row" >
+      <div class="col-lg-8 mx-auto text-center" >
+        <h2 class="section-heading text-white">Lighten Up!</h2>
+
+        <hr class="light my-4">
+        <p class="mb-5 text-white">Control your Hue light bulbs on demand by selecting a color on the panel and click ON.</p>
+      </div>
+      <div style = "margin: auto;width: 50%;display:block;">
+        <div id="color-picker" class="cp-default" ></div>
+        <script type="text/javascript">
+            var hue = 0;
+            var bri = 200;
+            ColorPicker(
+
+                  document.getElementById('color-picker'),
+
+                  function(hex, hsv, rgb) {
+                  hue = 65535 * hsv.h / 360;
+                  bri = 254 * hsv.v;
+                  console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
+                  console.log('hue:', hue);
+                  //make API call to send the hsv value to raspberry pi
+
+                  //console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
+                  //document.body.style.backgroundColor = hex;        // #HEX
+              });
+
+          </script>
+
+      </div>
+      <div style = "margin: auto;width: 50%;display:block;">
+
+        <script>
+          function lightSwitch(state){
+            var xhttp = new XMLHttpRequest();
+            var url = 'https://enfraiawvc75f.x.pipedream.net/';
+            var data = {
+              "hue": hue,
+              "on": state,
+              "bri": bri
+            };
+            console.log('request data: ', data);
+            $.post(url, data, function(data, status){
+              console.log(`${data} and status is ${status}`)
+            });
+
+
+          }
+        </script>
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" name="on" id="on">
+          <label class="custom-control-label" for="on" style="color:white;">Lights Off/On</label>
+        </div>
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" name="eft" id="eft">
+          <label class="custom-control-label" for="eft" style="color:white;">Color loop</label>
+        </div>
+        <div class="form-group">
+          <label class = "mb-5 text-white" for="tr">Transition seconds (0 to 300) = </label><output style="color:white;">150</output>
+          <!-- Note: value is in 10ths of second -->
+          <input type="range" class="form-control-range" min="0" max="3000" value="1500" name="tr" id="tr" oninput="this.previousElementSibling.value = Math.round(this.value / 10, 1)" >
+        </div>
+        <button type="button" id="button" class="btn btn-light">Send command</button>
+<!--
+        <button class="btn btn-light btn-xl js-scroll-trigger" onclick="lightSwitch(true)">ON</button>
+        <button class="btn btn-light btn-xl js-scroll-trigger" onclick="lightSwitch(false)">OFF</button>
+-->
+      </div>
+    </div>
+  </div>
+</section>

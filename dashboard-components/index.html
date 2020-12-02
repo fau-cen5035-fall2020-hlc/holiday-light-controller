@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top" style = "font-size: 1.7vw;">Holiday Light</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto" style = "flow: right">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#account" style = "font-size: 1.5vw;">Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services" style = "font-size: 1.5vw;">Switch</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact" style = "font-size: 1.5vw;">Schedule</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio" style = "font-size: 1.5vw;">Demo</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="./login.php" style = "font-size: 1.5vw;">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <!--<strong>Your Favorite Source of Free Bootstrap Themes</strong>-->
+            </h1>
+            <hr>
+          </div>
+          <div class="col-lg-8 mx-auto">
+            <!--<p class="text-faded mb-5">Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>-->
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Lighten Up!</a>
+          </div>
+        </div>
+      </div>
+    </header>
+<!--
+    <section class="bg-primary" id="services" >
+      <div class="container">
+        <div class="row" >
+          <div class="col-lg-8 mx-auto text-center" >
+            <h2 class="section-heading text-white">Lighten Up!</h2>
+
+            <hr class="light my-4">
+            <p class="mb-5 text-white">Control your Hue light bulbs on demand by selecting a color on the panel and click ON.</p>
+          </div>
+          <div style = "margin: auto;width: 50%;display:block;">
+            <div id="color-picker" class="cp-default" ></div>
+            <script type="text/javascript">
+                var hue = 0;
+                var bri = 200;
+                ColorPicker(
+
+                      document.getElementById('color-picker'),
+
+                      function(hex, hsv, rgb) {
+                      hue = 65535 * hsv.h / 360;
+                      bri = 254 * hsv.v;
+                      console.log(hsv.h, hsv.s, hsv.v);         // [0-359], [0-1], [0-1]
+                      console.log('hue:', hue);
+                      //make API call to send the hsv value to raspberry pi
+
+                      //console.log(rgb.r, rgb.g, rgb.b);         // [0-255], [0-255], [0-255]
+                      //document.body.style.backgroundColor = hex;        // #HEX
+                  });
+
+              </script>
+
+          </div>
+          <div style = "margin: auto;width: 50%;display:block;">
+
+            <script>
+              function lightSwitch(state){
+                var xhttp = new XMLHttpRequest();
+                var url = 'https://enfraiawvc75f.x.pipedream.net/';
+                var data = {
+                  "hue": hue,
+                  "on": state,
+                  "bri": bri
+                };
+                console.log('request data: ', data);
+                $.post(url, data, function(data, status){
+                  console.log(`${data} and status is ${status}`)
+                });
+
+
+              }
+            </script>
+            <a class="btn btn-light btn-xl js-scroll-trigger" onclick="lightSwitch(true)">ON</a>
+            <a class="btn btn-light btn-xl js-scroll-trigger" onclick="lightSwitch(false)">OFF</a>
+          </div>
+        </div>
+      </div>
+    </section>
+-->
+<!--
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading">Schedule</h2>
+            <hr class="my-4">
+          </div>
+        </div>
+
+
+        <div class="row">
+-->
+          <!-- jQuery Calender: https://www.jqueryscript.net/time-clock/Pretty-Event-Calendar-&-Datepicker-Plugin-For-jQuery-Calendar-js.html-->
+<!--
+          <div class="schedule-event-section" style = "width:100%; ">
+
+            <div id = "schedule-event-left" style = "width:50%; float: left; justify-content: center; display: flex;">
+              <div id="calendar-container"></div>
+            </div>
+
+            <div class="schedule-event-right">
+              <div class="input_section">
+                <input id = "selected-date" placeholder = "Date"></input><br/>
+
+                <div class="time-section">
+                  <input id = "selected-time" placeholder = "Time"></input>
+                  <label class="switch">
+                    <input type="checkbox"  >
+                    <div class="slider round">
+                      <span class="on">AM</span>
+                      <span class="off">PM</span>
+                    </div>
+                  </label>
+                </div>
+
+                <input id = "event-name" placeholder = "Name of Event"></input><br/>
+              </div>
+
+              <div class = "song-section">
+                <div class="random-label">
+                  <p class="random-label-p">Random</p>
+                </div>
+
+                <label class="switch">
+                  <input type="checkbox" class="togBtn" onclick="random_song(this)" >
+                  <div class="slider round">
+                    <span class="on">ON</span>
+                    <span class="off">OFF</span>
+                  </div>
+                </label>
+                <br/>
+                <input class="song-input"  placeholder = "Theme for music">
+              </div>
+
+              <a class="btn btn-light btn-xl js-scroll-trigger" onclick="lightSwitch(false)">Submit</a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+-->
+<!--
+    <section class="p-0" id="portfolio">
+      <div class="container-fluid p-0">
+        <div class="row no-gutters popup-gallery">
+          <div class="col-lg-4 col-sm-6">
+
+            <a class="portfolio-box">
+              <img class="img-fluid" src="img/portfolio/thumbnails/1.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Event1
+                  </div>
+                  <div class="project-name">
+                    New Year
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+
+            <a class="portfolio-box">
+              <img class="img-fluid" src="img/portfolio/thumbnails/2.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Event2
+                  </div>
+                  <div class="project-name">
+                    Birthday
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+
+            <a class="portfolio-box">
+              <img class="img-fluid" src="img/portfolio/thumbnails/3.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Event3
+                  </div>
+                  <div class="project-name">
+                    4th of July
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+
+            <a class="portfolio-box">
+              <img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Event4
+                  </div>
+                  <div class="project-name">
+                    Halloween
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+
+            <a class="portfolio-box">
+              <img class="img-fluid" src="img/portfolio/thumbnails/5.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Event5
+                  </div>
+                  <div class="project-name">
+                    X'mas
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-lg-4 col-sm-6">
+
+            <a class="portfolio-box">
+              <img class="img-fluid" src="img/portfolio/thumbnails/6.jpg" alt="">
+              <div class="portfolio-box-caption">
+                <div class="portfolio-box-caption-content">
+                  <div class="project-category text-faded">
+                    Event6
+                  </div>
+                  <div class="project-name">
+                    Hanukkah
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+-->
+    <!--
+    <section class="bg-dark text-white">
+      <div class="container text-center">
+        <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
+        <a class="btn btn-light btn-xl sr-button" href="http://startbootstrap.com/template-overviews/creative/">Download Now!</a>
+      </div>
+    </section>
+  -->
+
+
+    <!-- Bootstrap core JavaScript --><!--
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+-->
+    <!-- Plugin JavaScript --><!--
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+-->
+    <!-- Custom scripts for this template --><!--
+    <script src="js/creative.min.js"></script>
+-->
+    <!--Calendar section --><!--
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script src="./Pretty-Event-Calendar/src/calendar.js"></script>
+    <script>
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var date = now.getDate();
+
+        // inline
+        $('#calendar-container').calendar({
+            //view: 'month',
+            width: 320,
+            height: 320,
+            // startWeek: 0,
+            // selectedRang: [new Date(), null],
+            //data: data,
+            monthArray: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            weekArray: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            //date: new Date(),
+            // data:[
+            // {
+            //   date: '2020/12/24',
+            //   value: 'Chrismas Eva'
+            // }
+            // ],
+            onSelected: function (view, date, data) {
+                console.log('view:' + view)
+                console.log('date:' + date)
+                var da = date.getDate();
+                var mo = date.getMonth()+1;
+                var ye = date.getFullYear();
+                document.getElementById("selected-date").value = mo + '/' + da + '/' + ye;
+                //console.log('data:' + (data || '无'));
+            },
+
+        });
+      </script>
+      <script>
+      /*Change placeholder when taggle random*/
+        function random_song(item){
+          var song_input = document.getElementsByClassName("song-input")[0];
+          var placeholder = "";
+          if(item.hasAttribute("checked")){
+            placeholder = "Theme for music";
+            item.removeAttribute("checked");
+          }
+          else{
+            placeholder = "A YouTube playlist URL"
+            var att = document.createAttribute("checked");
+            item.setAttributeNode(att);
+          }
+          song_input.setAttribute("placeholder", placeholder)
+        }
+      </script>
+-->
+<!--
+  </body>
+
+</html>
+-->

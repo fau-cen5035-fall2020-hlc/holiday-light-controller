@@ -1,6 +1,6 @@
 <?php
 require('sessioninfo.php');
-// Query to send in HTTPS request			
+// Query to send in HTTPS request
 $payload = '{
 	"keys": [
 		{
@@ -49,20 +49,23 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 	array_push($_SESSION['messages'], $error);
 }
 ?>
+<?php
+/* below is moved to account.php which is being included in line 111
+<html>
 <html>
 	<head>
 		<!-- Metadata  -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<!-- Page Title  -->
 		<title>Holiday Light Controller</title>
-		
+
 		<!-- Cascading Style Sheets -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-		
+
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		
+
 	</head>
 	<body>
 		<h4 class="text-center">Dashboard</h4>
@@ -72,7 +75,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 			<div class="row">
 				<div class="col-lg-6">
 					<h5>User information</h5>
-					
+
 					<table class="table table-bordered">
 						<tbody>
 							<tr>
@@ -102,7 +105,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 					<!--- Hue Notes
 					brightness : level = (int)        - int is from 0 to 100 (mapped to 255)
 					hue        : level = ('hue:int')  - int is from 0 to 65535
-					saturation : level = ('sat:int')  - int is from 0 to 255   
+					saturation : level = ('sat:int')  - int is from 0 to 255
 					ct         : level = ('ct:int')   - int is from 153 to 500
 					rgb        : level = ('rgb:hex')  - hex is from 000000 to ffffff
 					transition : level = ('tr:int')   - int is from 0 to 3000 in tenths of seconds
@@ -116,7 +119,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 					<div class="form-group">
 						<label for="bri">Brightness (0 to 100)</label> = <output>50</output>
 						<input type="range" class="form-control-range" min="0" max="100" value="50" name="bri" id="bri" oninput="this.previousElementSibling.value = this.value">
-						
+
 					</div>
 					<div class="form-group">
 						<label for="hue">Hue (0 to 65535)</label> = <output>32768</output>
@@ -148,7 +151,19 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 					<button type="button" id="button" class="btn btn-primary">Send command</button>
 				</div>
 			</div>
-		</div>
+		</div>*/
+		include('dashboard-components/head.html');
+		?>
+
+	<body id="page-top">
+			<?php
+				include('dashboard-components/index.html');
+				include('dashboard-components/account.php');
+				include('dashboard-components/light-switch.html');
+				include('dashboard-components/schedule-event.php');
+				include('dashboard-components/demo.html');
+				include('dashboard-components/scripts.html');
+				?>
 		<script>
 		$("#button").click(function(data){
 			if(document.getElementById('on').checked) {
@@ -156,16 +171,19 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 			} else {
 				$on = false;
 			}
-			
+
 			if(document.getElementById('eft').checked) {
 				$eft = "colorloop";
 			} else {
 				$eft = "none";
 			}
-			
-			$.get("process/publish-message.php?on=" + $on + "&bri=" + $("#bri").val() + "&hue=" + $("#hue").val() + "&sat=" + $("#sat").val() + "&ct=" + $("#ct").val() + "&rgb=" + $("#rgb").val() + "&eft=" + $eft + "&tr=" + $("#tr").val(), function(response){
+
+			$.get("process/publish-message.php?on=" + $on + "&bri=" + bri + "&hue=" + hue + "&eft=" + $eft + "&tr=" + $("#tr").val(), function(response){
 				alert(response);
 			});
+			// $.get("process/publish-message.php?on=" + $on + "&bri=" + $("#bri").val() + "&hue=" + $("#hue").val() + "&sat=" + $("#sat").val() + "&ct=" + $("#ct").val() + "&rgb=" + $("#rgb").val() + "&eft=" + $eft + "&tr=" + $("#tr").val(), function(response){
+			// 	alert(response);
+			// });
 		});
 		</script>
 	</body>
