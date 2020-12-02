@@ -3,16 +3,15 @@
 import sys
 import random
 import math
-import os     #
+import os
 import pyaudio
 from scipy import signal
-import pygame
 from socket import *
-from pygame.locals import *
 from random import *
 import numpy
 from scipy.signal import blackmanharris, fftconvolve
 from numpy import argmax, sqrt, mean, diff, log
+import time
 
 # See http://www.swharden.com/blog/2013-05-09-realtime-fft-audio-visualization-with-python/
 class SoundRecorder:
@@ -150,10 +149,24 @@ def build_default_tuner_range():
             2093.0:'C7'
             }
 
+def note_to_brightness(freq_index):
+    ''' return Hue API brightness
+    '''
+    # There are 61 music notes in the dictionary
+    # The API has brightness range 1-254
+    brightness = 100+ round((freq_index+1)*4.16) #most of music has node lower than C5, so add 100 to bump up brightness
+    return min(254, brightness)
+
 class NoteToLight:
     def main(self):
+        """ Output ligh control JSON every n second
+        This function take audio and analyze sound frequency.
+        It takes average frequency in n second and adjust the brightness of light accordingly.
+        """
+        n = 5
         inputnote = 1
-        
+        music_end = False
+
         # Build frequency, noteName dictionary
         tunerNotes = build_default_tuner_range()
 
@@ -164,6 +177,9 @@ class NoteToLight:
         SR=SoundRecorder() #recording audio
 
         print('Start recording...')
+
+        start_time = time.time()
+        targetnote_list = []
 
         while True:
 
@@ -176,18 +192,34 @@ class NoteToLight:
             except:
                 inputnote == 0
 
+            if SR.inStream.is_stopped():
+                break
             SR.close()
 
 
-            if signal_level > soundgate:                                      #### basic noise gate to stop it guessing ambient noises
+
+            if signal_level > soundgate:                                 #### basic noise gate to stop it guessing ambient noises
                 continue
-            else:
-                targetnote = closest_value_index(frequencies, round(inputnote, 2))
-                print(tunerNotes[frequencies[targetnote]])
 
             if inputnote > frequencies[len(tunerNotes)-1]:                        #### not interested in notes above the notes list
                 continue
 
             if inputnote < frequencies[0]:                                     #### not interested in notes below the notes list
                 continue
+
+            current_time = time.time()
+            if current_time - start_time > n:       #### every n seconds
+                start_time = current_time           #### reset start time,
+
+                if targetnote_list:
+                    avg_note = closest_value_index(frequencies, round(sum(targetnote_list)/len(targetnote_list), 2))   #### get average note over n sec,
+                    targetnote_list.clear()             #### clear note list,
+                    print(note_to_brightness(avg_note))
+                    #print(tunerNotes[frequencies[avg_note]])
+
+            # targetnote = closest_value_index(frequencies, round(inputnote, 2))
+            # print(time.time()-start_time)
+            targetnote_list.append(inputnote)
+
+
 NoteToLight().main()
