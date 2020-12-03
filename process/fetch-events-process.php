@@ -72,8 +72,9 @@ if($response['http_code'] === 200){
     $property = $value['entity']['properties'];
     array_push($_SESSION['events'],
       array('event' => $property['event']['stringValue'],
-      'date' => $property['date']['stringValue'],
-      'time' => $property['time']['stringValue'])
+			'datetime' => $property['datetime']['stringValue'])
+			//'date' => $property['date']['stringValue'],
+      //'time' => $property['time']['stringValue'])
       //'color' => $property['color']['stringValue'])
     );
   };

@@ -79,6 +79,20 @@
 
  <!-- Select color to color input-->
   <script>
+    function random_color(item){
+      if(item.hasAttribute("checked")){
+        item.removeAttribute("checked");
+        var form = document.forms["scheduleEventForm"];
+        form['hue'].value = 0;
+        form['hue2'].value = 0;
+        form['hue3'].value = 0;
+        alert(form['hue'].value, form['hue2'].value, form['hue3'].value)
+      }
+      else{
+        var att = document.createAttribute("checked");
+        item.setAttributeNode(att);
+      }
+    }
 
     function add_color(){
       var color_holders = document.getElementsByClassName('set_color');
@@ -106,6 +120,7 @@
   <script>
     var errorMsg = "";
     var today = new Date();
+
 
     function onSameDay(d1, d2){
       return d1.getFullYear() === d2.getFullYear() &&
@@ -192,6 +207,10 @@
 
       if(valid){
         document.getElementById('selected-date-error').innerHTML= " ";
+        if(document.getElementById('song-or-url').hasAttribute("checked")){   //if random is not selected, save url and discard song-input
+          form['url-input'].value = form['song-input'].value;
+          form['song-input'].value = '';
+        }
         return true;
       }
       else{
