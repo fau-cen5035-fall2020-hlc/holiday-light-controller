@@ -155,7 +155,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 		include('dashboard-components/head.html');
 		?>
 
-	<body id="page-top">
+	 <body id="page-top"> 
 			<?php
 				include('dashboard-components/index.html');
 				include('dashboard-components/account.php');

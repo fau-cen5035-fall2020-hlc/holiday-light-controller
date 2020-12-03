@@ -1,1 +1,6 @@
 runtime: php74
+
+handlers:
+
+- url: /img
+  static_dir: img
