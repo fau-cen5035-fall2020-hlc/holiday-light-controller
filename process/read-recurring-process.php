@@ -57,13 +57,15 @@ print_r($result);
 
 foreach(json_decode($result, TRUE)['batch']['entityResults'] as $key => $value){
 	$id = $value['entity']['key']['path'][0]['id'];
-	$userID = $value['entity']['properties']['userID']['stringValue'];
 	$datetime = $value['entity']['properties']['datetime']['stringValue'];
 	$event = $value['entity']['properties']['event']['stringValue'];
-	$song = $value['entity']['properties']['song']['stringValue'];
-	$hue1 = $value['entity']['properties']['hue']['doubleValue'];
+	$holiday = $value['entity']['properties']['holiday']['stringValue'];
+	$hue = $value['entity']['properties']['hue']['doubleValue'];
 	$hue2 = $value['entity']['properties']['hue2']['doubleValue'];
 	$hue3 = $value['entity']['properties']['hue3']['doubleValue'];
+	$hue_random = $value['entity']['properties']['hue_random']['stringValue'];
+	$url = $value['entity']['properties']['url']['stringValue'];
+	$userID = $value['entity']['properties']['userID']['stringValue'];
 
 	if(array_key_exists('recurrence', $value['entity']['properties'])){
 		$recurrence = $value['entity']['properties']['recurrence']['integerValue'];
@@ -74,7 +76,25 @@ foreach(json_decode($result, TRUE)['batch']['entityResults'] as $key => $value){
 
 	// PUBLISH MESSAGE
 	// Query to send in HTTPS request			
-	$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":true,"hue":' . $hue1 . ',"hue2":' . $hue2 . ',"hue3":' . $hue3 . ',"effect":"none","bri":100,"sat":254}}'))));
+	//$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":true,"hue":' . $hue . ',"hue2":' . $hue2 . ',"hue3":' . $hue3 . ',"effect":"none","bri":100,"sat":254}}'))));
+	$payload = json_encode(array('messages' => array('data' => base64_encode('
+		{
+			"Lights": {
+				"on": true,
+				"hue": ' . $hue . ',
+				"hue2": ' . $hue2 . ',
+				"hue3": ' . $hue3 . ',
+				"bri": 254,
+				"hue_random": ' . $hue_random . ',
+				"bri_random": ' . $hue_random . '
+			},
+			"Cast": {
+				"on": true,
+				"url": "' . $url . '",
+				"holiday": "' . $holiday . '"
+			}
+		}
+	'))));
 
 	// URL for HTTPS request
 	$url = 'https://pubsub.googleapis.com/v1/projects/holiday-light-controller/topics/raspberry_pi:publish';
@@ -186,17 +206,23 @@ foreach(json_decode($result, TRUE)['batch']['entityResults'] as $key => $value){
 							"event": {
 								"stringValue": "' . $event . '"
 							},
-							"song": {
-								"stringValue": "' . $song . '"
+							"holiday": {
+								"stringValue": "' . $holiday . '"
 							},
 							"hue": {
-								"doubleValue": "' . $hue1 . '"
+								"doubleValue": "' . $hue . '"
 							},
 							"hue2": {
 								"doubleValue": "' . $hue2 . '"
 							},
 							"hue3": {
 								"doubleValue": "' . $hue3 . '"
+							},
+							"hue_random": {
+								"stringValue": "' . $hue_random . '"
+							},
+							"url": {
+								"stringValue": "' . $url . '"
 							}
 						}
 					}
