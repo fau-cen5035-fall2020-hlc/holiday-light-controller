@@ -168,18 +168,21 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 		$("#button").click(function(data){
 			if(document.getElementById('on').checked) {
 				$on = true;
+				$cast = null;
 			} else {
 				$on = false;
+				$cast = false;
+
 			}
 
-			if(document.getElementById('eft').checked) {
-				$eft = "colorloop";
-			} else {
-				$eft = "none";
-			}
+			// if(document.getElementById('eft').checked) {
+			// 	$eft = "colorloop";
+			// } else {
+			// 	$eft = "none";
+			// }
 
-			$.get("process/publish-message.php?on=" + $on + "&bri=" + bri + "&hue=" + hue + "&eft=" + $eft + "&tr=" + $("#tr").val(), function(response){
-				alert(response);
+			$.get("process/publish-message.php?on=" + $on + "&bri=" + bri + "&hue=" + hue + "&cast=" + $cast, function(response){
+				//alert(response);
 			});
 			// $.get("process/publish-message.php?on=" + $on + "&bri=" + $("#bri").val() + "&hue=" + $("#hue").val() + "&sat=" + $("#sat").val() + "&ct=" + $("#ct").val() + "&rgb=" + $("#rgb").val() + "&eft=" + $eft + "&tr=" + $("#tr").val(), function(response){
 			// 	alert(response);

@@ -86,7 +86,7 @@
                 <p class="random-label-p">Random Color</p>
               </div>
               <label class="switch">
-                <input type="checkbox" id="random-color" class="togBtn" checked onclick="random_color(this)">
+                <input type="checkbox" id="random-color" name = "random-color" value = "false" class="togBtn" checked onclick="random_color(this)">
                 <div class="slider round">
                   <span class="on">ON</span>
                   <span class="off">OFF</span>
