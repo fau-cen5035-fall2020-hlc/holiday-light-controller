@@ -1,6 +1,8 @@
 <?php
 require(__DIR__ . '/../sessioninfo.php');
-
+if(empty($_POST['random-color'])){
+	$_POST['random-color'] = 'true';
+}
 // Query to send in HTTPS request
 $payload = '{
 	"mode": "NON_TRANSACTIONAL",
@@ -39,14 +41,17 @@ $payload = '{
 					"url": {
 						"stringValue": "' . $_POST['url-input'] . '"
 					},
+					"hue_random":{
+						"stringValue": "' . $_POST['random-color'] . '"
+					},
 					"hue": {
-						"doubleValue": "' . floatval($_POST['color1']) . '"
+						"doubleValue": "' . floatval($_POST['hue']) . '"
 					},
 					"hue2": {
-						"doubleValue": "' . floatval($_POST['color2']) . '"
+						"doubleValue": "' . floatval($_POST['hue2']) . '"
 					},
 					"hue3": {
-						"doubleValue": "' . floatval($_POST['color3']) . '"
+						"doubleValue": "' . floatval($_POST['hue3']) . '"
 					}
 				}
 			}

@@ -182,7 +182,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 			// }
 
 			$.get("process/publish-message.php?on=" + $on + "&bri=" + bri + "&hue=" + hue + "&cast=" + $cast, function(response){
-				alert(response);
+				//alert(response);
 			});
 			// $.get("process/publish-message.php?on=" + $on + "&bri=" + $("#bri").val() + "&hue=" + $("#hue").val() + "&sat=" + $("#sat").val() + "&ct=" + $("#ct").val() + "&rgb=" + $("#rgb").val() + "&eft=" + $eft + "&tr=" + $("#tr").val(), function(response){
 			// 	alert(response);
