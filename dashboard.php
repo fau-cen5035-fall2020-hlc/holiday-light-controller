@@ -161,7 +161,7 @@ if(array_key_exists('error', json_decode($result, TRUE))){
 				include('dashboard-components/account.php');
 				include('dashboard-components/light-switch.html');
 				include('dashboard-components/schedule-event.php');
-				include('dashboard-components/demo.html');
+				//include('dashboard-components/demo.html');
 				include('dashboard-components/scripts.html');
 				?>
 		<script>
