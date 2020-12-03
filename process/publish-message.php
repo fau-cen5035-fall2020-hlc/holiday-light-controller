@@ -1,12 +1,18 @@
 <?php
 require(__DIR__ . '/../sessioninfo.php');
 
-// Query to send in HTTPS request			
+// Query to send in HTTPS request
 //$payload = json_encode(array('messages' => array('data' => base64_encode(json_encode(array('Lights' => array('on' => $_GET['on'], 'hue' => $_GET['hue'], 'effect' => $_GET['eft'], 'bri' => $_GET['bri'], 'sat' => $_GET['sat'], 'ct' => $_GET['ct'])), JSON_NUMERIC_CHECK)))));
 
 //$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":' . $_GET['on'] . ',"hue":' . $_GET['hue'] . ',"effect":"' . $_GET['eft'] . '","bri":' . $_GET['bri'] . ',"sat":' . $_GET['sat'] . ',"ct":' . $_GET['ct'] . '}}'))));
 
-$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":' . $_GET['on'] . ',"hue":' . $_GET['hue'] . ',"effect":"' . $_GET['eft'] . '","bri":' . $_GET['bri'] . ',"sat":' . $_GET['sat'] . '}}'))));
+//$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":' . $_GET['on'] . ',"hue":' . $_GET['hue'] . ',"effect":"' . $_GET['eft'] . '","bri":' . $_GET['bri'] . ',"sat":' . $_GET['sat'] . '}}'))));
+if($_GET['on']=='true'){
+	$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":' . $_GET['on'] . ',"hue":' . round($_GET['hue']) . '}}'))));
+} else{
+	$payload = json_encode(array('messages' => array('data' => base64_encode('{"Lights":{"on":' . $_GET['on'] . ',"cast":' . $_GET['cast'] . '}}'))));
+}
+
 
 
 // URL for HTTPS request

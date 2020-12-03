@@ -33,7 +33,7 @@ $payload = '{
 					"recurrence": {
 						"integerValue": "' . $_POST['recurrence'] . '"
 					},
-					"song": {
+					"holiday": {
 						"stringValue": "' . $_POST['song-input'] . '"
 					},
 					"url": {
