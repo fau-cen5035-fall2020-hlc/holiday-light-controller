@@ -1,0 +1,4 @@
+cron:
+- description: "read recurring events"
+  url: /process/read-recurring-process.php
+  schedule: every 1 minutes
