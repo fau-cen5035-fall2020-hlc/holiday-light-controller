@@ -41,7 +41,7 @@
               <p id = "selected-date-error" class = "text-primary"></p>
 
               <input id = "datetime" name = "datetime"  type="hidden">
-              
+
               <div class="time-section">
                 <input id = "selected-time" name = "selected-time" placeholder = "Time hh:mm" ></input>
                 <label class="switch">
@@ -69,7 +69,7 @@
               </div>
 
               <label class="switch">
-                <input type="checkbox" class="togBtn" onclick="random_song(this)" >
+                <input type="checkbox" id="song-or-url" class="togBtn" onclick="random_song(this)" >
                 <div class="slider round">
                   <span class="on">ON</span>
                   <span class="off">OFF</span>
@@ -77,16 +77,29 @@
               </label>
               <br/>
               <input class="song-input" id = "song-input" name = "song-input" placeholder = "Theme for music">
+              <input class="song-input" id = "url-input" name = "url-input" type = "hidden">
               <p id = "selected-song-error" class = "text-primary"></p>
             </div>
 
             <div class = "color-section" style = "margin-top: 150px;">
+              <div class="random-label">
+                <p class="random-label-p">Random Color</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="random-color" class="togBtn" checked onclick="random_color(this)">
+                <div class="slider round">
+                  <span class="on">ON</span>
+                  <span class="off">OFF</span>
+                </div>
+              </label>
+              <br/>
+
               <input id = "color-display" style = "width:200px;"></input>
               <button class="btn btn-xl js-scroll-trigger" type = "button" onclick="add_color()">Add</button><br/>
-              <input id = "color1" name = "color1" class = "set_color" placeholder = "color1"></input><br/>
+              <input id = "hue" name = "hue" class = "set_color" placeholder = "color1"></input><br/>
               <p id = "selected-color-error" class = "text-primary"></p>
-              <input id = "color2" name = "color2" class = "set_color" placeholder = "color2"></input><br/>
-              <input id = "color3" name = "color3" class = "set_color" placeholder = "color3"></input><br/>
+              <input id = "hue2" name = "hue2" class = "set_color" placeholder = "color2"></input><br/>
+              <input id = "hue3" name = "hue3" class = "set_color" placeholder = "color3"></input><br/>
               <button class="btn btn-xl js-scroll-trigger" type = "button" onclick="clear_all_color()">Clear</button><br/><br/>
             </div>
             <button class="btn btn-light btn-xl js-scroll-trigger" type = "submit">Submit</button>
@@ -111,8 +124,9 @@
     foreach($_SESSION['events'] as $key => $value){
       echo '<tr>';
       echo '<td>'.$value['event'].'</td>';
-      echo '<td>'.$value['date'].'</td>';
-      echo '<td>'.$value['time'].'</td>';
+      echo '<td>'.gmdate("Y/m/d", $value['datetime']).'</td>';
+      echo '<td>'.gmdate("H:i", $value['datetime']).'</td>';
+      //echo '<td>'.$value['time'].'</td>';
       //echo '<td>'.$value['colors'].'</td>';
       echo '</tr>';
     }

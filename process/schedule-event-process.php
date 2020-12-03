@@ -36,6 +36,9 @@ $payload = '{
 					"song": {
 						"stringValue": "' . $_POST['song-input'] . '"
 					},
+					"url": {
+						"stringValue": "' . $_POST['url-input'] . '"
+					},
 					"hue": {
 						"doubleValue": "' . floatval($_POST['color1']) . '"
 					},
