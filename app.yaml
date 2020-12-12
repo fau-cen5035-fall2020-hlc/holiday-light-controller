@@ -4,3 +4,6 @@ handlers:
 
 - url: /img
   static_dir: img
+
+- url: .*
+  script: auto

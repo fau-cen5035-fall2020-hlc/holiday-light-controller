@@ -3,8 +3,8 @@ require(__DIR__ . '/../sessioninfo.php');
 require_once(__DIR__ . '/../google-api-client/vendor/autoload.php');
  
 // init configuration
-$clientID = '467051867349-stitogbnu41lvhdi65ntpp3hbvbru0nb.apps.googleusercontent.com';
-$clientSecret = 'sBjtGqIEOp8rVdS8cDQaN0h-';
+$clientID = json_decode(file_get_contents('client_secret_467051867349-stitogbnu41lvhdi65ntpp3hbvbru0nb.apps.googleusercontent.com.json'), true)['web']['client_id'];
+$clientSecret = json_decode(file_get_contents('client_secret_467051867349-stitogbnu41lvhdi65ntpp3hbvbru0nb.apps.googleusercontent.com.json'), true)['web']['client_secret'];
 $redirectUri = ('https://holiday-light-controller.ue.r.appspot.com/process/sso-process.php');
   
 // create Client Request to access Google API
@@ -17,15 +17,19 @@ $client->addScope("profile");
  
 // authenticate code from Google OAuth Flow
 if (isset($_GET['code'])) {
+	echo('code is set<br />');
   $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+  print_r($token);
   $client->setAccessToken($token['access_token']);
+  print_r($client);
   
   // get profile info
   $google_oauth = new Google_Service_Oauth2($client);
   $google_account_info = $google_oauth->userinfo->get();
   $email =  $google_account_info->email;
   $name =  $google_account_info->name;
- 
+ echo('<br />');
+ echo($email);
   // Query to send in HTTPS request			
   $payload = '{
     "query": {
